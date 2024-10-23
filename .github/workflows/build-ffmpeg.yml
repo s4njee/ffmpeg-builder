@@ -50,10 +50,10 @@ jobs:
 
       - name: Build SVT-AV1
         run: |
-          export OPT_FLAGS = -O2 -pipe -flto
-          CFLAGS = $(OPT_FLAGS)
-          CXXFLAGS = $(OPT_FLAGS)
-          LDFLAGS = $(OPT_FLAGS) 
+          export OPT_FLAGS="-O2 -pipe -flto"
+          CFLAGS=$(OPT_FLAGS)
+          CXXFLAGS=$(OPT_FLAGS)
+          LDFLAGS=$(OPT_FLAGS) 
           export CFLAGS CXXFLAGS LDFLAGS
           cd svt-av1
           cd Build
