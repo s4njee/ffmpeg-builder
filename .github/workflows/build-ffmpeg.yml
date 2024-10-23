@@ -50,6 +50,9 @@ jobs:
 
       - name: Build SVT-AV1
         run: |
+          OPT_FLAGS = -O2 -pipe -flto
+          CXXFLAGS = $(OPT_FLAGS)
+          LDFLAGS = $(OPT_FLAGS) 
           cd svt-av1
           cd Build
           cmake .. -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
@@ -65,7 +68,9 @@ jobs:
       - name: Build FFmpeg
         run: |
           cd ffmpeg
-          ./configure --enable-gpl --enable-libx264 --enable-libx265 --enable-libvpx --enable-libfdk-aac --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libass --enable-libsvtav1 --enable-nonfree
+          export LD_LIBRARY_PATH+=":/usr/local/lib"
+          export PKG_CONFIG_PATH+=":/usr/local/lib/pkgconfig"
+          ./configure --enable-gpl --enable-libx264 --enable-libx265 --enable-libvpx --enable-libfdk-aac --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libass --enable-libsvtav1 --enable-nonfree --enable-static --pkg-config-flags="--static"
           make -j$(nproc)
           sudo make install
 
