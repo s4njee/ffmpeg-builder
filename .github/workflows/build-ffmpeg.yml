@@ -71,9 +71,8 @@ jobs:
             meson \
             ninja-build \
             wget \
-            zlib1g-dev \
-            doxygen
-      
+            zlib1g-dev 
+     
 
       - name: Build SVT-AV1
         run: |
