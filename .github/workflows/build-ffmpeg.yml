@@ -55,8 +55,7 @@ jobs:
             libvorbis-dev \
             libass-dev \
             wget \
-            libnuma-dev \     
-            doxygen
+            libnuma-dev   
 
 
       - name: Build SVT-AV1
