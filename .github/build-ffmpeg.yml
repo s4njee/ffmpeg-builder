@@ -1,0 +1,74 @@
+name: Build FFmpeg
+
+on:
+  schedule:
+    - cron: '*/30 * * * *' # Runs every 30 minutes
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check for New Commits
+        id: check_commits
+        run: |
+          git clone https://gitlab.com/AOMediaCodec/svt-av1.git
+          cd svt-av1
+          git fetch origin
+          git checkout main # Or your default branch
+          # Get the latest commit hash
+          latest_commit=$(git rev-parse HEAD)
+          echo "latest_commit=$latest_commit" >> $GITHUB_ENV
+
+      - name: Compare Commits
+        run: |
+          git clone https://gitlab.com/AOMediaCodec/svt-av1.git svt-av1
+          cd svt-av1
+          git fetch origin
+          git checkout main
+          # Get the previous commit hash (this can be managed by storing it in GitHub Actions secrets or environment variable)
+          previous_commit=$(cat ../previous_commit.txt || echo "none")
+
+          if [ "$latest_commit" != "$previous_commit" ]; then
+            echo "New commit detected: $latest_commit"
+            echo "$latest_commit" > ../previous_commit.txt
+            echo "Build FFmpeg..."
+          else
+            echo "No new commits detected."
+            exit 0
+          fi
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            yasm \
+            nasm \
+            pkg-config \
+            git \
+            build-essential \
+            libx264-dev \
+            libx265-dev \
+            libvpx-dev \
+            libfdk-aac-dev \
+            libmp3lame-dev \
+            libopus-dev \
+            libvorbis-dev \
+            libass-dev
+
+      - name: Clone FFmpeg
+        run: |
+          git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg
+          cd ffmpeg
+          git checkout release/7.0
+          
+      - name: Build FFmpeg
+        run: |
+          cd ffmpeg
+          ./configure --enable-gpl --enable-libx264 --enable-libx265 --enable-libvpx --enable-libfdk-aac --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libass --enable-libsvtav1
+          make -j$(nproc)
+          sudo make install
+
+      - name: Verify FFmpeg Installation
+        run: ffmpeg -version
+
