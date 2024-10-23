@@ -9,9 +9,9 @@ jobs:
   build:
     runs-on: ffmpeg-builder
     env:
-      CFLAGS: -O2 -pipe -flto
-      CXXFLAGS: -O2 -pipe -flto
-      LDFLAGS: -O2 -pipe -flto
+      CFLAGS: -O2 -pipe -flto=auto
+      CXXFLAGS: -O2 -pipe -flto=auto
+      LDFLAGS: -O2 -pipe -flto=auto
     steps:
       - name: Compare Commits
         run: |
@@ -57,11 +57,12 @@ jobs:
 
       - name: Build SVT-AV1
         run: |
+          mkdir bin
           cd svt-av1
           cd Build
-          cmake .. -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
-          make -j $(nproc)
-          sudo make install
+          PATH="$HOME/bin:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$HOME/ffmpeg" -DCMAKE_BUILD_TYPE=Release -DBUILD_DEC=OFF -DBUILD_SHARED_LIBS=OFF .. && \
+          PATH="$HOME/bin:$PATH" make -j$(nproc) && \
+          make install
 
       - name: Clone FFmpeg
         run: |
@@ -73,8 +74,7 @@ jobs:
         run: |
           cd ffmpeg
           export LD_LIBRARY_PATH+=":/usr/local/lib"
-          export PKG_CONFIG_PATH+=":/usr/local/lib/pkgconfig"
-          ./configure --enable-gpl --enable-libx264 --enable-libx265 --enable-libvpx --enable-libfdk-aac --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libass --enable-libsvtav1 --enable-nonfree --enable-static --pkg-config-flags="--static" --disable-shared
+          PKG_CONFIG_PATH="$HOME/ffmpeg/lib/pkgconfig" ./configure --enable-gpl --enable-libx264 --enable-libx265 --enable-libvpx --enable-libfdk-aac --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libass --enable-libsvtav1 --enable-nonfree --enable-static --pkg-config-flags="--static" --disable-shared
           make -j$(nproc)
           ./ffmpeg -version
 
