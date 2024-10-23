@@ -55,7 +55,7 @@ jobs:
       - name: Build FFmpeg
         run: |
           cd ffmpeg
-          ./configure --enable-gpl --enable-libx264 --enable-libx265 --enable-libvpx --enable-libfdk-aac --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libass --enable-libsvtav1
+          ./configure --enable-gpl --enable-libx264 --enable-libx265 --enable-libvpx --enable-libfdk-aac --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libass --enable-libsvtav1 --enable-nonfree
           make -j$(nproc)
           sudo make install
 
