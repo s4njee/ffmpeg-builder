@@ -71,7 +71,6 @@ jobs:
             meson \
             ninja-build \
             pkg-config \
-            texinfo \
             wget \
             zlib1g-dev
       
