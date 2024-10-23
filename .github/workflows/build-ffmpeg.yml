@@ -72,7 +72,7 @@ jobs:
           cd ffmpeg
           export LD_LIBRARY_PATH+=":/usr/local/lib"
           export PKG_CONFIG_PATH+=":/usr/local/lib/pkgconfig"
-          ./configure --enable-gpl --enable-libx264 --enable-libx265 --enable-libvpx --enable-libfdk-aac --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libass --enable-libsvtav1 --enable-nonfree --enable-static --pkg-config-flags="--static"
+          ./configure --enable-gpl --enable-libx264 --enable-libx265 --enable-libvpx --enable-libfdk-aac --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libass --enable-libsvtav1 --enable-nonfree --enable-static --pkg-config-flags="--static" --disable-shared
           make -j$(nproc)
           ./ffmpeg -version
 
