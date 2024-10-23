@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ffmpeg-builder
+    container: ubuntu:latest
     env:
       CFLAGS: -O2 -pipe -flto=auto
       CXXFLAGS: -O2 -pipe -flto=auto
