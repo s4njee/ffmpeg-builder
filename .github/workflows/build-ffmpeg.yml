@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ffmpeg-builder
 
     steps:
       - name: Compare Commits
@@ -28,12 +28,14 @@ jobs:
             exit 0
           fi
 
+
       - name: Install Dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y \
             yasm \
             nasm \
+            cmake \
             pkg-config \
             git \
             build-essential \
@@ -45,6 +47,14 @@ jobs:
             libopus-dev \
             libvorbis-dev \
             libass-dev
+
+      - name: Build SVT-AV1
+        run: |
+          cd svt-av1
+          cd Build
+          cmake .. -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
+          make -j $(nproc)
+          sudo make install     
 
       - name: Clone FFmpeg
         run: |
