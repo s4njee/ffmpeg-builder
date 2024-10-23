@@ -16,7 +16,7 @@ jobs:
           git clone https://gitlab.com/AOMediaCodec/svt-av1.git
           cd svt-av1
           git fetch origin
-          git checkout main # Or your default branch
+          git checkout master # Or your default branch
           # Get the latest commit hash
           latest_commit=$(git rev-parse HEAD)
           echo "latest_commit=$latest_commit" >> $GITHUB_ENV
@@ -26,7 +26,7 @@ jobs:
           git clone https://gitlab.com/AOMediaCodec/svt-av1.git svt-av1
           cd svt-av1
           git fetch origin
-          git checkout main
+          git checkout master
           # Get the previous commit hash (this can be managed by storing it in GitHub Actions secrets or environment variable)
           previous_commit=$(cat ../previous_commit.txt || echo "none")
 
