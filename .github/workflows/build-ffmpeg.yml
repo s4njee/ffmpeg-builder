@@ -9,11 +9,11 @@ jobs:
   build:
     runs-on: ffmpeg-builder
     env:
-#      CC: clang-18
-#      CXX: clang++-18
+      CC: clang-18
+      CXX: clang++-18
       CFLAGS: -O2 -pipe -flto=auto
       CXXFLAGS: -O2 -pipe -flto=auto
-      LDFLAGS: -O2 -pipe -flto=auto
+      LDFLAGS: -O2 -pipe -flto=auto -fuse-ld=lld
     steps:
       - name: Compare Commits
         run: |
@@ -142,7 +142,6 @@ jobs:
           cd ffmpeg
           mkdir ffmpeg-package
           cp ./ffmpeg ffmpeg-package/
-          cp ./ffplay ffmpeg-package/
           cp ./ffprobe ffmpeg-package/
           zip -r ffmpeg-package.zip ffmpeg-package
 
