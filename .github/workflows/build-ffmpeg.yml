@@ -128,6 +128,10 @@ jobs:
           PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure --enable-lto --enable-gpl --enable-libx264 --enable-libx265 --enable-libvpx --enable-libfdk-aac --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libass --enable-libsvtav1 --enable-libaom --enable-nonfree --enable-static --pkg-config-flags="--static" --disable-shared
           make -j$(nproc)
           ./ffmpeg -version
+        env:
+          CFLAGS: -O2 -pipe
+          CXXFLAGS: -O2 -pipe
+          LDFLAGS: -O2 -pipe
 
 
       - name: Package FFmpeg
