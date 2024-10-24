@@ -139,25 +139,7 @@ jobs:
         run: |
           cd ffmpeg
           export LD_LIBRARY_PATH+=":/usr/local/lib"
-          PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure \
-          --extra-cflags="-I$HOME/ffmpeg_build/include" \ 
-          --extra-ldflags="-L$HOME/ffmpeg_build/lib" \
-          --extra-libs="-lpthread -lm" \
-          --enable-gpl --enable-libx264 \
-          --enable-libx265 \
-          --enable-libvpx \
-          --enable-libfdk-aac \
-          --enable-libmp3lame \
-          --enable-libopus \
-          --enable-libvorbis \
-          --enable-libass \
-          --enable-libsvtav1 \
-          --enable-libaom \
-        #  --enable-libdav1d \
-          --enable-nonfree \
-          --enable-static \
-          --pkg-config-flags="--static" \
-          --disable-shared
+          PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure   --extra-cflags="-I$HOME/ffmpeg_build/include" --extra-ldflags="-L$HOME/ffmpeg_build/lib" --extra-libs="-lpthread -lm" --enable-gpl --enable-libx264 --enable-libx265 --enable-libvpx --enable-libfdk-aac --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libass --enable-libsvtav1 --enable-libaom --enable-libdav1d --enable-nonfree --enable-static --pkg-config-flags="--static" --disable-shared
           make -j$(nproc)
           ./ffmpeg -version
         env:
