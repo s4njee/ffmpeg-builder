@@ -40,11 +40,8 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo apt-get install -y \
-            autoconf \
-            automake \
             yasm \
             nasm \
-            cmake \
             pkg-config \
             git \
             build-essential \
@@ -56,15 +53,9 @@ jobs:
             libopus-dev \
             libvorbis-dev \
             libass-dev \
-            libnuma-dev \ 
-            libsdl2-dev \
-            libtool \
-            libva-dev \
-            libvdpau-dev \
-            libvorbis-dev \
-            meson \
-            ninja-build \
-            wget 
+            wget \
+            autoconf \
+            automake
      
 
       - name: Build SVT-AV1
