@@ -9,9 +9,9 @@ jobs:
   build:
     runs-on: ffmpeg-builder
     env:
-      CFLAGS: -O2 -pipe -flto=16
-      CXXFLAGS: -O2 -pipe -flto=16
-      LDFLAGS: -O2 -pipe -flto=16
+      CFLAGS: -O2 -pipe -flto=auto
+      CXXFLAGS: -O2 -pipe -flto=auto
+      LDFLAGS: -O2 -pipe -flto=auto
     steps:
       - name: Compare Commits
         run: |
@@ -106,7 +106,7 @@ jobs:
           mkdir -p aom_build && \
           cd aom_build && \
           PATH="$HOME/bin:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$HOME/ffmpeg_build" -DENABLE_TESTS=OFF -DENABLE_NASM=on ../aom && \
-          PATH="$HOME/bin:$PATH" make -j16 && \
+          PATH="$HOME/bin:$PATH" make -j$(nproc) && \
           make install
 
       - name: Clone FFmpeg
