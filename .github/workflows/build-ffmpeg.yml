@@ -9,8 +9,8 @@ jobs:
   build:
     runs-on: ffmpeg-builder
     env:
-      CC: clang
-      CXX: clang++
+      CC: clang-18
+      CXX: clang++-18
       CFLAGS: -O2 -pipe -flto=auto
       CXXFLAGS: -O2 -pipe -flto=auto
       LDFLAGS: -O2 -pipe -flto=auto
