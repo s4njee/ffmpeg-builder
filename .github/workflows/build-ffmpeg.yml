@@ -38,30 +38,30 @@ jobs:
 #          name: latestcommit
 #          path: latestcommit.env
 #
-      - name: Install Dependencies
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y \
-            yasm \
-            nasm \
-            pkg-config \
-            git \
-            build-essential \
-            libx264-dev \
-            libx265-dev \
-            libvpx-dev \
-            libfdk-aac-dev \
-            libmp3lame-dev \
-            libopus-dev \
-            libvorbis-dev \
-            libass-dev \
-            wget \
-            autoconf \
-            automake \
-            cmake \
-            libtool
-          sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
-
+#      - name: Install Dependencies
+#        run: |
+#          sudo apt-get update -y
+#          sudo apt-get install -y \
+#            yasm \
+#            nasm \
+#            pkg-config \
+#            git \
+#            build-essential \
+#            libx264-dev \
+#            libx265-dev \
+#            libvpx-dev \
+#            libfdk-aac-dev \
+#            libmp3lame-dev \
+#            libopus-dev \
+#            libvorbis-dev \
+#            libass-dev \
+#            wget \
+#            autoconf \
+#            automake \
+#            cmake \
+#            libtool
+#          sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+#
 
       - name: Build SVT-AV1
         run: |
