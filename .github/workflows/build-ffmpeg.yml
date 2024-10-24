@@ -114,9 +114,9 @@ jobs:
           PATH="$HOME/bin:$PATH" make -j$(nproc) && \
           make install
         env:
-          CFLAGS: -O2 -pipe -flto=8
-          CXXFLAGS: -O2 -pipe -flto=8
-          LDFLAGS: -O2 -pipe -flto=8
+          CFLAGS: -O2 -pipe -flto=thin
+          CXXFLAGS: -O2 -pipe -flto=thin
+          LDFLAGS: -O2 -pipe -flto=thin
 
       - name: Clone FFmpeg
         run: |
