@@ -38,9 +38,8 @@ jobs:
 #
       - name: Install Dependencies
         run: |
-          sudo add-apt-repository universe
-          sudo apt update
-          sudo apt install -y \
+          sudo apt-get update -y
+          sudo apt-get install -y \
             autoconf \
             automake \
             yasm \
@@ -52,8 +51,6 @@ jobs:
             libx264-dev \
             libx265-dev \
             libvpx-dev \
-            libfreetype6-dev \
-            libgnutls28-dev \
             libfdk-aac-dev \
             libmp3lame-dev \
             libopus-dev \
@@ -65,13 +62,9 @@ jobs:
             libva-dev \
             libvdpau-dev \
             libvorbis-dev \
-            libxcb1-dev \
-            libxcb-shm0-dev \
-            libxcb-xfixes0-dev \
             meson \
             ninja-build \
-            wget \
-            zlib1g-dev 
+            wget 
      
 
       - name: Build SVT-AV1
