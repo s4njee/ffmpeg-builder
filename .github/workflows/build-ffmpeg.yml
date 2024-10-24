@@ -17,6 +17,7 @@ jobs:
     steps:
       - name: Compare Commits
         run: |
+          sud apt-get update
           sudo apt-get install -y \
           libdav1d-dev \
           libaom-dev \
