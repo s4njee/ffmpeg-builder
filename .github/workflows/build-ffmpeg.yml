@@ -158,7 +158,7 @@ jobs:
           mkdir ffmpeg-package
           cp ./ffmpeg ffmpeg-package/
           cp ./ffprobe ffmpeg-package/
-          zip -r ffmpeg-package.zip ffmpeg-package
+          zip -r ../ffmpeg-package.zip ffmpeg-package
 
       - name: Create Release
         id: create_release
