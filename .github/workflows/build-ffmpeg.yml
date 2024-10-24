@@ -9,9 +9,9 @@ jobs:
   build:
     runs-on: ffmpeg-builder
     env:
-      CFLAGS: -O2 -pipe -flto=auto
-      CXXFLAGS: -O2 -pipe -flto=auto
-      LDFLAGS: -O2 -pipe -flto=auto
+      CFLAGS: -O2 -pipe -flto
+      CXXFLAGS: -O2 -pipe -flto
+      LDFLAGS: -O2 -pipe -flto
     steps:
       - name: Compare Commits
         run: |
