@@ -159,24 +159,27 @@ jobs:
           cp ./ffmpeg ffmpeg-package/
           cp ./ffprobe ffmpeg-package/
           zip -r ../ffmpeg-package.zip ffmpeg-package
-
-      - name: Create Release
+      - name: version
+        run: echo "::set-output name=version::$(./ffmpeg/ffmpeg -version |  cut -d " " -f 3 | grep N)"
+        id: version
+      - name: release
+        uses: actions/create-release@v1
         id: create_release
-        run: |
-          GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-          REPO=${{ github.repository }}
-          VERSION=$(date +%Y%m%d%H%M%S) # Create a version tag
-          curl -s -X POST -H "Authorization: token $GITHUB_TOKEN" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/$REPO/releases \
-          -d "{\"tag_name\": \"v$VERSION\", \"name\": \"FFmpeg Release v$VERSION\"}" | jq -r .id
+        with:
+          draft: false
+          prerelease: false
+          release_name: ${{ steps.version.outputs.version }}
+          tag_name: ${{ github.ref }}
+          body_path: CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
-      - name: Upload FFmpeg Package
-        run: |
-          GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-          REPO=${{ github.repository }}
-          VERSION=$(date +%Y%m%d%H%M%S)
-          curl -s -X POST -H "Authorization: token $GITHUB_TOKEN" \
-          -H "Content-Type: application/zip" \
-          --data-binary @ffmpeg-package.zip \
-          "https://uploads.github.com/repos/$REPO/releases/${{ steps.create_release.outputs.id }}/assets?name=ffmpeg-package.zip"
+      - name: upload linux artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./ffmpeg-package.zip
+          asset_name: /ffmpeg-package.zip
+          asset_content_type: application/zip
