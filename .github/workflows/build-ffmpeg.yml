@@ -55,7 +55,8 @@ jobs:
             libass-dev \
             wget \
             autoconf \
-            automake
+            automake \
+            cmake
      
 
       - name: Build SVT-AV1
