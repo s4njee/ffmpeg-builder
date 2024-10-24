@@ -9,8 +9,8 @@ jobs:
   build:
     runs-on: ffmpeg-builder
     env:
-      CC: clang-18
-      CXX: clang++-18
+#      CC: clang-18
+#      CXX: clang++-18
       CFLAGS: -O2 -pipe -flto=auto
       CXXFLAGS: -O2 -pipe -flto=auto
       LDFLAGS: -O2 -pipe -flto=auto
@@ -114,9 +114,9 @@ jobs:
           PATH="$HOME/bin:$PATH" make -j$(nproc) && \
           make install
         env:
-          CFLAGS: -O2 -pipe -flto=thin
-          CXXFLAGS: -O2 -pipe -flto=thin
-          LDFLAGS: -O2 -pipe -flto=thin
+          CFLAGS: -O2 -pipe
+          CXXFLAGS: -O2 -pipe
+          LDFLAGS: -O2 -pipe
 
       - name: Clone FFmpeg
         run: |
