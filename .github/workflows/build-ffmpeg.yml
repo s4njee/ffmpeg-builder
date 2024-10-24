@@ -106,7 +106,7 @@ jobs:
           mkdir -p aom_build && \
           cd aom_build && \
           PATH="$HOME/bin:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$HOME/ffmpeg_build" -DENABLE_TESTS=OFF -DENABLE_NASM=on ../aom && \
-          PATH="$HOME/bin:$PATH" make -j$(nproc) && \
+          PATH="$HOME/bin:$PATH" make -j16 && \
           make install
 
       - name: Clone FFmpeg
