@@ -56,7 +56,8 @@ jobs:
             wget \
             autoconf \
             automake \
-            cmake
+            cmake \
+            libtool
      
 
       - name: Build SVT-AV1
