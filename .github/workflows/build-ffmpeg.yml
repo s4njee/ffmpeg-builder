@@ -9,6 +9,8 @@ jobs:
   build:
     runs-on: ffmpeg-builder
     env:
+      CC: clang
+      CXX: clang++
       CFLAGS: -O2 -pipe -flto=auto
       CXXFLAGS: -O2 -pipe -flto=auto
       LDFLAGS: -O2 -pipe -flto=auto
@@ -58,7 +60,8 @@ jobs:
             automake \
             cmake \
             libtool
-     
+          sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+
 
       - name: Build SVT-AV1
         run: |
