@@ -17,6 +17,15 @@ jobs:
     steps:
       - name: Compare Commits
         run: |
+          sudo apt-get install -y \
+          libdav1d-dev \
+          libaom-dev \
+          libfdk-aac-dev \
+          libvpx-dev \
+          libopus-dev \ 
+          libx264-dev \
+          libx265-dev
+          
           git clone https://gitlab.com/AOMediaCodec/svt-av1.git svt-av1
           cd svt-av1
           git fetch origin
@@ -32,6 +41,7 @@ jobs:
             echo "No new commits detected."
             exit 0
           fi
+
 #      - name: Upload Variable Artifact
 #        uses: actions/upload-artifact@v4
 #        with:
@@ -71,64 +81,64 @@ jobs:
           PATH="$HOME/bin:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$HOME/ffmpeg_build" -DCMAKE_BUILD_TYPE=Release -DBUILD_DEC=OFF -DBUILD_SHARED_LIBS=OFF .. && \
           PATH="$HOME/bin:$PATH" make -j$(nproc) && \
           make install
-      - name: Build x265
-        run: |
-          wget -O x265.tar.bz2 https://bitbucket.org/multicoreware/x265_git/get/master.tar.bz2 && \
-          tar xjvf x265.tar.bz2 && \
-          cd multicoreware*/build/linux && \
-          PATH="$HOME/bin:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$HOME/ffmpeg_build" -DENABLE_SHARED=off ../../source && \
-          PATH="$HOME/bin:$PATH" make -j$(nproc) && \
-          make install
-      - name: Build x264
-        run: |
-          git -C x264 pull 2> /dev/null || git clone --depth 1 https://code.videolan.org/videolan/x264.git && \
-          cd x264 && \
-          PATH="$HOME/bin:$PATH" PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure --prefix="$HOME/ffmpeg_build" --bindir="$HOME/bin" --enable-static --enable-pic && \
-          PATH="$HOME/bin:$PATH" make -j$(nproc) && \
-          make install 
-      - name: Build libopus
-        run: |
-          git -C opus pull 2> /dev/null || git clone --depth 1 https://github.com/xiph/opus.git && \
-          cd opus && \
-          ./autogen.sh && \
-          ./configure --prefix="$HOME/ffmpeg_build" --disable-shared && \
-          make -j$(nproc) && \
-          make install
-      - name: Build libvpx
-        run: |
-          git -C libvpx pull 2> /dev/null || git clone --depth 1 https://chromium.googlesource.com/webm/libvpx.git && \
-          cd libvpx && \
-          PATH="$HOME/bin:$PATH" ./configure --prefix="$HOME/ffmpeg_build" --disable-examples --disable-unit-tests --enable-vp9-highbitdepth --as=yasm && \
-          PATH="$HOME/bin:$PATH" make -j$(nproc) && \
-          make install
-      - name: Build fdk-aac
-        run: |
-          git -C fdk-aac pull 2> /dev/null || git clone --depth 1 https://github.com/mstorsjo/fdk-aac && \
-          cd fdk-aac && \
-          autoreconf -fiv && \
-          ./configure --prefix="$HOME/ffmpeg_build" --disable-shared && \
-          make -j$(nproc) && \
-          make install
-      - name: Build libdav1d
-        run: |
-          git -C dav1d pull 2> /dev/null || git clone --depth 1 https://code.videolan.org/videolan/dav1d.git && \
-          mkdir -p dav1d/build && \
-          cd dav1d/build && \
-          meson setup -Denable_tools=false -Denable_tests=false --default-library=static .. --prefix "$HOME/ffmpeg_build" --libdir="$HOME/ffmpeg_build/lib" && \
-          ninja && \
-          ninja install
-      - name: Build AOM
-        run: |
-          git -C aom pull 2> /dev/null || git clone --depth 1 https://aomedia.googlesource.com/aom && \
-          mkdir -p aom_build && \
-          cd aom_build && \
-          PATH="$HOME/bin:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$HOME/ffmpeg_build" -DENABLE_TESTS=OFF -DENABLE_NASM=on ../aom && \
-          PATH="$HOME/bin:$PATH" make -j$(nproc) && \
-          make install
-        env:
-          CFLAGS: -O2 -pipe
-          CXXFLAGS: -O2 -pipe
-          LDFLAGS: -O2 -pipe
+#      - name: Build x265
+#        run: |
+#          wget -O x265.tar.bz2 https://bitbucket.org/multicoreware/x265_git/get/master.tar.bz2 && \
+#          tar xjvf x265.tar.bz2 && \
+#          cd multicoreware*/build/linux && \
+#          PATH="$HOME/bin:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$HOME/ffmpeg_build" -DENABLE_SHARED=off ../../source && \
+#          PATH="$HOME/bin:$PATH" make -j$(nproc) && \
+#          make install
+#      - name: Build x264
+#        run: |
+#          git -C x264 pull 2> /dev/null || git clone --depth 1 https://code.videolan.org/videolan/x264.git && \
+#          cd x264 && \
+#          PATH="$HOME/bin:$PATH" PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure --prefix="$HOME/ffmpeg_build" --bindir="$HOME/bin" --enable-static --enable-pic && \
+#          PATH="$HOME/bin:$PATH" make -j$(nproc) && \
+#          make install
+#      - name: Build libopus
+#        run: |
+#          git -C opus pull 2> /dev/null || git clone --depth 1 https://github.com/xiph/opus.git && \
+#          cd opus && \
+#          ./autogen.sh && \
+#          ./configure --prefix="$HOME/ffmpeg_build" --disable-shared && \
+#          make -j$(nproc) && \
+#          make install
+#      - name: Build libvpx
+#        run: |
+#          git -C libvpx pull 2> /dev/null || git clone --depth 1 https://chromium.googlesource.com/webm/libvpx.git && \
+#          cd libvpx && \
+#          PATH="$HOME/bin:$PATH" ./configure --prefix="$HOME/ffmpeg_build" --disable-examples --disable-unit-tests --enable-vp9-highbitdepth --as=yasm && \
+#          PATH="$HOME/bin:$PATH" make -j$(nproc) && \
+#          make install
+#      - name: Build fdk-aac
+#        run: |
+#          git -C fdk-aac pull 2> /dev/null || git clone --depth 1 https://github.com/mstorsjo/fdk-aac && \
+#          cd fdk-aac && \
+#          autoreconf -fiv && \
+#          ./configure --prefix="$HOME/ffmpeg_build" --disable-shared && \
+#          make -j$(nproc) && \
+#          make install
+#      - name: Build libdav1d
+#        run: |
+#          git -C dav1d pull 2> /dev/null || git clone --depth 1 https://code.videolan.org/videolan/dav1d.git && \
+#          mkdir -p dav1d/build && \
+#          cd dav1d/build && \
+#          meson setup -Denable_tools=false -Denable_tests=false --default-library=static .. --prefix "$HOME/ffmpeg_build" --libdir="$HOME/ffmpeg_build/lib" && \
+#          ninja && \
+#          ninja install
+#      - name: Build AOM
+#        run: |
+#          git -C aom pull 2> /dev/null || git clone --depth 1 https://aomedia.googlesource.com/aom && \
+#          mkdir -p aom_build && \
+#          cd aom_build && \
+#          PATH="$HOME/bin:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$HOME/ffmpeg_build" -DENABLE_TESTS=OFF -DENABLE_NASM=on ../aom && \
+#          PATH="$HOME/bin:$PATH" make -j$(nproc) && \
+#          make install
+#        env:
+#          CFLAGS: -O2 -pipe
+#          CXXFLAGS: -O2 -pipe
+#          LDFLAGS: -O2 -pipe
 
       - name: Clone FFmpeg
         run: |
