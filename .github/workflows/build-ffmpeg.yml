@@ -74,7 +74,7 @@ jobs:
           cd Build
           cmake .. -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
           make -j$(nproc) && \
-          make install
+          sudo make install
 #      - name: Build x265
 #        run: |
 #          wget -O x265.tar.bz2 https://bitbucket.org/multicoreware/x265_git/get/master.tar.bz2 && \
