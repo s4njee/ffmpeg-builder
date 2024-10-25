@@ -169,4 +169,4 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: ffmpeg-package.zip
-          tag_name: $DATE
+          tag_name: ${{ env.DATE }}
