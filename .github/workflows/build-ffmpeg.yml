@@ -161,13 +161,12 @@ jobs:
           cp ./ffmpeg ffmpeg-package/
           cp ./ffprobe ffmpeg-package/
           zip -r ../ffmpeg-package.zip ffmpeg-package
-      - name: version
-        run: |
-          cd ffmpeg
-          echo "::set-output name=version::$(./ffmpeg -version |  cut -d " " -f 3 | grep N)"
-        id: version
+
+      - name: Get current date
+        run: echo "DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
+
       - name: Release
         uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: ffmpeg-package.zip
+          tag_name: $DATE
