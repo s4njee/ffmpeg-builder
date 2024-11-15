@@ -171,28 +171,3 @@ jobs:
           files: ffmpeg-package.zip
           tag_name: ${{ env.DATE }}
 
-      - name: Delete oldest release
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OWNER: ${{ github.repository_owner }}
-          REPO: ${{ github.repository }}
-        run: |
-          # Get all releases and sort by creation date
-          RELEASES=$(gh api \
-            -H "Accept: application/vnd.github+json" \
-            /repos/$OWNER/$REPO/releases \
-            --jq 'sort_by(.created_at) | .[0]')
-          
-          # Extract the ID of the oldest release
-          RELEASE_ID=$(echo $RELEASE_ID | jq -r '.id')
-          
-          # Delete the oldest release if it exists
-          if [ ! -z "$RELEASE_ID" ] && [ "$RELEASE_ID" != "null" ]; then
-            gh api \
-              --method DELETE \
-              -H "Accept: application/vnd.github+json" \
-              /repos/$OWNER/$REPO/releases/$RELEASE_ID
-            echo "Deleted release ID: $RELEASE_ID"
-          else
-            echo "No releases found to delete"
-          fi
