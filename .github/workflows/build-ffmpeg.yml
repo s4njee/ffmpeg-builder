@@ -173,7 +173,6 @@ jobs:
             --disable-shared
           PATH="$HOME/bin:$PATH" make -j$(nproc)
           make install
-          ldconfig
 
 
       - name: Build x264
