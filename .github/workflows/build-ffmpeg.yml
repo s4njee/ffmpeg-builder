@@ -261,7 +261,7 @@ jobs:
             --extra-libs="-lpthread -lm" \
             --enable-gpl \
             --enable-alsa\
-            --enable-pulseaudio\
+            --enable-libpulse\
             --enable-libx264 \
             --enable-libx265 \
             --enable-libkvazaar \
