@@ -250,32 +250,6 @@ jobs:
           make install
           cd ..
 
-      - name: Build JXL
-        run: |
-          git clone -b 1.0.7 https://github.com/google/highway.git
-          cd highway
-          mkdir build && cd build
-          cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX="$HOME/ffmpeg_build" ..
-          ninja
-          ninja install
-          cd ../..
-
-          # Build libjxl
-          git clone -b v0.9.1 https://github.com/libjxl/libjxl.git
-          cd libjxl
-          ./deps.sh
-          mkdir build && cd build
-          cmake -G Ninja -DCMAKE_BUILD_TYPE=Release \
-            -DBUILD_SHARED_LIBS=OFF \
-            -DCMAKE_INSTALL_PREFIX="$HOME/ffmpeg_build" \
-            -DBUILD_TESTING=OFF \
-            -DJPEGXL_ENABLE_PLUGINS=OFF \
-            -DJPEGXL_ENABLE_TOOLS=OFF \
-            -DJPEGXL_ENABLE_EXAMPLES=OFF \
-            ..
-          ninja
-          ninja install
-          cd ../..
 
       - name: Build WebP
         run: |
@@ -315,7 +289,6 @@ jobs:
             --enable-libvpx \
             --enable-libfdk-aac \
             --enable-libmp3lame \
-            --enable-libjxl \
             --enable-libwebp \
             --enable-libopus \
             --enable-libvorbis \
