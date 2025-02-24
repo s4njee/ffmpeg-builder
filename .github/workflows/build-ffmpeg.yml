@@ -127,7 +127,7 @@ jobs:
           git clone --depth 1 https://github.com/harfbuzz/harfbuzz.git
           cd harfbuzz
           mkdir build && cd build
-          PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig:$PKG_CONFIG_PATH" meson setup --prefix="$HOME/ffmpeg_build" --default-library=static ..
+          PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" meson setup --prefix="$HOME/ffmpeg_build" --default-library=static ..
           ninja
           ninja install
           cd ../..
