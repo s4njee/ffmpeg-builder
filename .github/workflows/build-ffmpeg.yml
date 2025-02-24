@@ -275,6 +275,7 @@ jobs:
           # Build libjxl
           git clone -b v0.9.1 https://github.com/libjxl/libjxl.git
           cd libjxl
+          ./deps.sh
           mkdir build && cd build
           cmake -G Ninja -DCMAKE_BUILD_TYPE=Release \
             -DBUILD_SHARED_LIBS=OFF \
