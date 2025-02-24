@@ -302,7 +302,7 @@ jobs:
           cd ffmpeg
           git checkout master
           export LD_LIBRARY_PATH+=":/usr/local/lib"
-          PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure \
+          PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/x86_64-linux-gnu/pkgconfig:$HOME/ffmpeg_build/lib/pkgconfig" ./configure \
             --extra-cflags="-I$HOME/ffmpeg_build/include" \
             --extra-ldflags="-L$HOME/ffmpeg_build/lib" \
             --extra-libs="-lpthread -lm" \
