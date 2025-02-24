@@ -96,19 +96,7 @@ jobs:
           make -j$(nproc)
           make install
           cd ..
-      - name: Build FLAC
-        run: |
-          wget https://github.com/xiph/flac/releases/download/1.4.3/flac-1.4.3.tar.xz
-          tar xf flac-1.4.3.tar.xz
-          cd flac-1.4.3
 
-          # Configure and build FLAC
-          PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure --prefix="$HOME/ffmpeg_build"  --disable-shared \
-          --enable-static \
-          --disable-thorough-tests \
-          --with-pic 
-          make -j$(nproc)
-          make install  
 
       - name: Build libunibreak
         run: |
@@ -327,7 +315,6 @@ jobs:
             --enable-libvpx \
             --enable-libfdk-aac \
             --enable-libmp3lame \
-            --enable-libflac \
             --enable-libjxl \
             --enable-libwebp \
             --enable-libopus \
