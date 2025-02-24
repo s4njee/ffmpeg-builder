@@ -137,7 +137,7 @@ jobs:
           git clone --depth 1 https://github.com/libass/libass.git
           cd libass
           ./autogen.sh
-          PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure \
+          PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/x86_64-linux-gnu/pkgconfig:$HOME/ffmpeg_build/lib/pkgconfig" ./configure \
             --prefix="$HOME/ffmpeg_build" \
             --disable-shared \
             --enable-static
