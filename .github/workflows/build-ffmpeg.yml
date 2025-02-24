@@ -127,7 +127,7 @@ jobs:
           git clone --depth 1 https://github.com/harfbuzz/harfbuzz.git
           cd harfbuzz
           mkdir build && cd build
-          meson setup --prefix="$HOME/ffmpeg_build" --default-library=static ..
+          PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig:$PKG_CONFIG_PATH" meson setup --prefix="$HOME/ffmpeg_build" --default-library=static ..
           ninja
           ninja install
           cd ../..
@@ -137,7 +137,7 @@ jobs:
           git clone --depth 1 https://github.com/libass/libass.git
           cd libass
           ./autogen.sh
-          PKG_CONFIG_PATH="$HOME/ffmpeg_build/x86_64-linux-gnu/pkgconfig" ./configure \
+          PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure \
             --prefix="$HOME/ffmpeg_build" \
             --disable-shared \
             --enable-static
