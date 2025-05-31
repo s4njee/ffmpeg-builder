@@ -199,6 +199,7 @@ jobs:
       - name: Build DAV1D
         run: |
           git -C dav1d pull 2> /dev/null || git clone --depth 1 https://github.com/videolan/dav1d.git
+          mkdir -p dav1d/build
           cd dav1d/build
           meson setup -Denable_tools=false \
             -Denable_tests=false \
